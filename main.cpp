@@ -10,8 +10,11 @@ public:
 int main() {
   SomeEE ee;
   auto onOpen = []() { std::cout << "var: open" << std::endl; };
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "IncompatibleTypes"
   auto id = ee.on(SomeEE::OPEN, onOpen);
   ee.on(SomeEE::OPEN, []() { std::cout << "lambda: open" << std::endl; });
+#pragma clang diagnostic pop
 
   ee.emit(SomeEE::OPEN); // both
 
