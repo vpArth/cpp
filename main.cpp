@@ -18,11 +18,11 @@ int main() {
   ee.off(id); // off var sub
   ee.emit(SomeEE::OPEN); // lambda only
 
-  ee.on<>(SomeEE::ARGS, std::function<void(int, int)>([](int i, int j) {
+  ee.on<int, int>(SomeEE::ARGS, [](int i, int j) {
     std::cout << "Argument: " << i << std::endl;
-  }));
-  ee.emit<>(SomeEE::ARGS, 42, 4);
-  ee.emit<>(SomeEE::ARGS, 24, 0);
+  });
+  ee.emit(SomeEE::ARGS, 42, 4);
+  ee.emit(SomeEE::ARGS, 24, 0);
 
   return 0;
 }
