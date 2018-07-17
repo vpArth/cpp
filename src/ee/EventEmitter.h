@@ -9,6 +9,9 @@
 
 namespace arth::lib {
   class EventEmitter {
+    template<typename T> struct TypeCast {
+      typedef T type;
+    };
   public:
     EventEmitter();
     EventEmitter(const EventEmitter &) = delete;
@@ -16,7 +19,8 @@ namespace arth::lib {
     ~EventEmitter();
 
     template<typename... Args>
-    unsigned int on(unsigned int event_id, std::function<void(Args...)> cb);
+    unsigned int on(unsigned int event_id, typename TypeCast<std::function<void(Args...)> >::type cb);
+
     unsigned int on(unsigned int event_id, std::function<void()> cb);
     template<typename... Args>
     void emit(unsigned int event_id, Args... args);
@@ -44,7 +48,7 @@ namespace arth::lib {
   };
 
   template<typename... Args>
-  unsigned int EventEmitter::on(unsigned int event_id, std::function<void(Args...)> cb) {
+  unsigned int EventEmitter::on(unsigned int event_id, typename TypeCast<std::function<void(Args...)> >::type cb) {
     if (!cb) {
       throw std::invalid_argument("EventEmitter::add_listener: No callback provided.");
     }
