@@ -21,7 +21,6 @@ namespace arth::lib {
     template<typename... Args>
     unsigned int on(unsigned int event_id, typename TypeCast<std::function<void(Args...)> >::type cb);
 
-    unsigned int on(unsigned int event_id, std::function<void()> cb);
     template<typename... Args>
     void emit(unsigned int event_id, Args... args);
     void off(unsigned int listener_id);
@@ -45,6 +44,7 @@ namespace arth::lib {
     std::mutex mutex;
     unsigned int last_listener{};
     std::multimap<unsigned int, std::shared_ptr<IListener>> listeners;
+    std::unordered_map<int, std::list<std::shared_ptr<IListener>>> _listeners;
   };
 
   template<typename... Args>
